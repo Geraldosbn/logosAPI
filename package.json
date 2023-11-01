@@ -13,8 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^8.4.1",
     "fastify": "4.22.2",
-    "fastify-cors": "^6.1.0",
     "postgres": "^3.4.0"
   },
   "devDependencies": {

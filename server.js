@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import { DatabasePostgres } from './database-postgres.js'
-import fastifyCors from 'fastify-cors'
+import cors from '@fastify/cors'
 
 export const server = fastify()
 export const database = new DatabasePostgres()
@@ -82,7 +82,7 @@ server.delete('/childReadings/:id', async (request, reply) => {
   return reply.status(204).send()
 })
 
-fastify.register(fastifyCors, {
+fastify.register(cors, {
   // Configure as opções do CORS conforme necessário
   origin: '*',
   methods: 'GET,PUT,POST,DELETE',
