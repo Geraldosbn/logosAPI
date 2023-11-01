@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import { DatabasePostgres } from './database-postgres.js'
+import fastifyCors from 'fastify-cors'
 
 export const server = fastify()
 export const database = new DatabasePostgres()
