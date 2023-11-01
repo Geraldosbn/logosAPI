@@ -82,7 +82,7 @@ server.delete('/childReadings/:id', async (request, reply) => {
   return reply.status(204).send()
 })
 
-fastify.register(cors, {
+server.register(cors, {
   // Configure as opções do CORS conforme necessário
   origin: '*',
   methods: 'GET,PUT,POST,DELETE',
