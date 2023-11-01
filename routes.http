@@ -1,24 +1,56 @@
-POST https://node-api-xaci.onrender.com/videos
+POST https://node-api-xaci.onrender.com/articles
 Content-Type: application/json
 
 {
-    "title":"branco",
-    "description": "Esse é o primeiro video",
-    "duration": 180
+    "author": "Nome do Autor",
+    "title": "Título do Artigo",
+    "description": "Descrição do Artigo",
+    "content": "Conteúdo do Artigo"
 }
 
-###
-GET https://node-api-xaci.onrender.com/videos
 
 ###
-PUT https://node-api-xaci.onrender.com/videos/5b984bc6-fddb-4295-b740-a6758de952e6
+GET https://node-api-xaci.onrender.com/articles
+
+
+###
+PUT https://node-api-xaci.onrender.com/articles/5b984bc6-fddb-4295-b740-a6758de952e6
 Content-Type: application/json
 
 {
-    "title":"preto",
-    "description": "Esse é o primeiro video",
-    "duration": 180
+    "title": "Novo Título",
+    "description": "Nova Descrição",
+    "content": "Novo Conteúdo"
+}
+
+
+###
+DELETE https://node-api-xaci.onrender.com/articles/3301971c-de2e-4ebb-893b-b17a1821e04f
+
+###
+POST https://node-api-xaci.onrender.com/childReadings
+Content-Type: application/json
+
+{
+    "author": "Nome do Autor",
+    "title": "Título da Postagem",
+    "description": "Descrição da Postagem",
+    "content": "Conteúdo da Postagem"
 }
 
 ###
-DELETE https://node-api-xaci.onrender.com/videos/3301971c-de2e-4ebb-893b-b17a1821e04f
+GET https://node-api-xaci.onrender.com/childReadings
+
+###
+PUT https://node-api-xaci.onrender.com/childReadings/5b984bc6-fddb-4295-b740-a6758de952e6
+Content-Type: application/json
+
+{
+    "title": "Novo Título",
+    "description": "Nova Descrição",
+    "content": "Novo Conteúdo"
+}
+
+###
+DELETE https://node-api-xaci.onrender.com/childReadings/3301971c-de2e-4ebb-893b-b17a1821e04f
+

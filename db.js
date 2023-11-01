@@ -5,12 +5,14 @@ let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env
 
 const sql = postgres({
   host: PGHOST,
-  port: 5432,
   dbname: PGDATABASE,
   user: PGUSER,
   password: PGPASSWORD,
-  sslmode: 'prefer',
-  connect_timeout: 10
+  port: 5432,
+  ssl: 'require',
+  connection: {
+    options: `project=${ENDPOINT_ID}`
+  }
 })
 
 export default sql

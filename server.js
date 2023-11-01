@@ -1,42 +1,83 @@
 import fastify from 'fastify'
 import { DatabasePostgres } from './database-postgres.js'
 
-const server = fastify()
+export const server = fastify()
+export const database = new DatabasePostgres()
 
-const database = new DatabasePostgres()
-
-server.post('/videos', async (request, reply) => {
-  const { title, description, duration } = request.body
-  await database.create({
+server.post('/articles', async (request, reply) => {
+  const { author, title, description, content } = request.body
+  await database.createArticle({
+    author,
     title,
     description,
-    duration
+    content
   })
   return reply.status(201).send()
 })
 
-server.get('/videos', async (request, reply) => {
+// Rota GET para listar artigos da tabela postArticle
+server.get('/articles', async (request, reply) => {
   const search = request.query.search
-  const videos = await database.list(search)
-  return reply.send(videos)
+  const articles = await database.listArticles(search)
+  return reply.send(articles)
 })
 
-server.put('/videos/:id', async (request, reply) => {
-  const videoId = request.params.id
-  const { title, description, duration } = request.body
-
-  await database.update(videoId, {
+// Rota PUT para atualizar um artigo na tabela postArticle
+server.put('/articles/:id', async (request, reply) => {
+  const articleId = request.params.id
+  const { title, description, content } = request.body
+  await database.updateArticle(articleId, {
     title,
     description,
-    duration
+    content
   })
-  const videos = database.list()
-  return reply.status(204).send(videos)
+  const articles = await database.listArticles()
+  return reply.status(204).send(articles)
 })
 
-server.delete('/videos/:id', async (request, reply) => {
-  const videoId = request.params.id
-  await database.delete(videoId)
+// Rota DELETE para excluir um artigo na tabela postArticle
+server.delete('/articles/:id', async (request, reply) => {
+  const articleId = request.params.id
+  await database.deleteArticle(articleId)
+  return reply.status(204).send()
+})
+
+// Rota POST para criar uma postagem na tabela postChildReading
+server.post('/childReadings', async (request, reply) => {
+  const { author, title, description, content } = request.body
+  await database.createChildReading({
+    author,
+    title,
+    description,
+    content
+  })
+  return reply.status(201).send()
+})
+
+// Rota GET para listar postagens da tabela postChildReading
+server.get('/childReadings', async (request, reply) => {
+  const search = request.query.search
+  const childReadings = await database.listChildReadings(search)
+  return reply.send(childReadings)
+})
+
+// Rota PUT para atualizar uma postagem na tabela postChildReading
+server.put('/childReadings/:id', async (request, reply) => {
+  const childReadingId = request.params.id
+  const { title, description, content } = request.body
+  await database.updateChildReading(childReadingId, {
+    title,
+    description,
+    content
+  })
+  const childReadings = await database.listChildReadings()
+  return reply.status(204).send(childReadings)
+})
+
+// Rota DELETE para excluir uma postagem na tabela postChildReading
+server.delete('/childReadings/:id', async (request, reply) => {
+  const childReadingId = request.params.id
+  await database.deleteChildReading(childReadingId)
   return reply.status(204).send()
 })
 
