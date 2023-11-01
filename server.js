@@ -81,4 +81,13 @@ server.delete('/childReadings/:id', async (request, reply) => {
   return reply.status(204).send()
 })
 
+fastify.register(fastifyCors, {
+  // Configure as opções do CORS conforme necessário
+  origin: '*',
+  methods: 'GET,PUT,POST,DELETE',
+  allowedHeaders: ['Content-Type'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204
+})
+
 server.listen({ host: '0.0.0.0', port: process.env.PORT ?? 3000 })
