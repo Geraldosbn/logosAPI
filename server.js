@@ -13,6 +13,7 @@ server.post('/articles', async (request, reply) => {
     description,
     content
   })
+  console.log('estudo criado', title)
   return reply.status(201).send()
 })
 
@@ -21,6 +22,7 @@ server.get('/articles', async (request, reply) => {
   const search = request.query.search
   const articles = await database.listArticles(search)
 
+  console.log('estudos buscados', articles)
   return reply.send(articles)
 })
 
@@ -34,6 +36,7 @@ server.put('/articles/:id', async (request, reply) => {
     content
   })
   const articles = await database.listArticles()
+
   return reply.status(204).send(articles)
 })
 
@@ -53,6 +56,8 @@ server.post('/childReadings', async (request, reply) => {
     description,
     content
   })
+
+  console.log('leitura criado', title)
   return reply.status(201).send()
 })
 
@@ -60,6 +65,7 @@ server.post('/childReadings', async (request, reply) => {
 server.get('/childReadings', async (request, reply) => {
   const search = request.query.search
   const childReadings = await database.listChildReadings(search)
+  console.log('leituras buscados', childReadings)
   return reply.send(childReadings)
 })
 
