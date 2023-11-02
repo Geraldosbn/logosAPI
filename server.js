@@ -20,6 +20,7 @@ server.post('/articles', async (request, reply) => {
 server.get('/articles', async (request, reply) => {
   const search = request.query.search
   const articles = await database.listArticles(search)
+
   return reply.send(articles)
 })
 
