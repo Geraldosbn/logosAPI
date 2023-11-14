@@ -1,19 +1,19 @@
 import { Router, Request } from 'express'
 import {
-  createArticle,
-  deleteArticle,
-  listArticles,
-  updateArticle
-} from '../../database/articleQueries'
+  createChildReading,
+  deleteChildReading,
+  listChildReadings,
+  updateChildReading
+} from '../../database/childReadingQueries'
 import { Req } from './interfaces'
 
-export default async function registerArticleRoutes(
+export default async function registerChildReadingsRoutes(
   router: Router
 ): Promise<void> {
-  router.post('/articles', async (req: Request<Req>, reply) => {
+  router.post('/childReadings', async (req: Request<Req>, reply) => {
     const { author, title, description, content } = req.body
 
-    await createArticle({
+    await createChildReading({
       author,
       title,
       description,
@@ -24,29 +24,29 @@ export default async function registerArticleRoutes(
     return reply.status(201).send()
   })
 
-  router.get('/articles', async (request: Req, reply) => {
+  router.get('/childReadings', async (request: Req, reply) => {
     const search = request.params.search
-    const articles = await listArticles(search)
+    const childReadings = await listChildReadings(search)
 
-    console.log('Estudos buscados:', articles)
-    return reply.send(articles)
+    console.log('childReadings buscados:', childReadings)
+    return reply.send(childReadings)
   })
 
-  router.put('/articles/:id', async (request: Req, reply) => {
+  router.put('/childReadings/:id', async (request: Req, reply) => {
     const articleId = request.params.id
     const { author, title, description, content } = request.body
 
-    await updateArticle(articleId, { author, title, description, content })
+    await updateChildReading(articleId, { author, title, description, content })
 
-    const articles = await listArticles('')
+    const childReadings = await listChildReadings('')
 
-    return reply.status(204).send(articles)
+    return reply.status(204).send(childReadings)
   })
 
-  router.delete('/articles/:id', async (req: Req, reply) => {
+  router.delete('/childReadings/:id', async (req: Req, reply) => {
     const articleId = req.params.id
 
-    await deleteArticle(articleId)
+    await deleteChildReading(articleId)
     return reply.status(204).send()
   })
 }
