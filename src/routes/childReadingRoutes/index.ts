@@ -1,52 +1,37 @@
-import { Router, Request } from 'express'
-import {
-  createChildReading,
-  deleteChildReading,
-  listChildReadings,
-  updateChildReading
-} from '../../database/childReadingQueries'
-import { Req } from './interfaces'
+import { Router } from 'express'
+import { Post } from '../../models/post'
+import { Req } from '../shared/interfaces'
+import getChildReading from '../../controllers/childReading/getChildReading'
+import createPostChildReading from '../../controllers/childReading/createPostChildReading'
+import updatePostChildReading from '../../controllers/childReading/updatePostChildReading'
+import deletePostChildReading from '../../controllers/childReading/deletePostChildReading'
 
-export default async function registerChildReadingsRoutes(
-  router: Router
-): Promise<void> {
-  router.post('/childReadings', async (req: Request<Req>, reply) => {
-    const { author, title, description, content } = req.body
-
-    await createChildReading({
-      author,
-      title,
-      description,
-      content
-    })
-
-    console.log('Estudo criado:', title)
-    return reply.status(201).send()
+export default async function registerArticleRoutes(router: Router) {
+  router.get('/childReadings', async (req: Req<Post>, res) => {
+    const search = req.params.search
+    const { body, statusCode } = await getChildReading(search)
+    return res.send(body).status(statusCode)
   })
 
-  router.get('/childReadings', async (request: Req, reply) => {
-    const search = request.params.search
-    const childReadings = await listChildReadings(search)
-
-    console.log('childReadings buscados:', childReadings)
-    return reply.send(childReadings)
+  router.post('/childReadings', async (req: Req<Post>, res) => {
+    const postContent = req.body
+    const { body, statusCode } = await createPostChildReading(postContent)
+    return res.send(body).status(statusCode)
   })
 
-  router.put('/childReadings/:id', async (request: Req, reply) => {
-    const articleId = request.params.id
-    const { author, title, description, content } = request.body
-
-    await updateChildReading(articleId, { author, title, description, content })
-
-    const childReadings = await listChildReadings('')
-
-    return reply.status(204).send(childReadings)
-  })
-
-  router.delete('/childReadings/:id', async (req: Req, reply) => {
+  router.put('/childReadings/:id', async (req: Req<Post>, res) => {
     const articleId = req.params.id
+    const postContent = req.body
+    const { body, statusCode } = await updatePostChildReading(
+      articleId,
+      postContent
+    )
+    return res.send(body).status(statusCode)
+  })
 
-    await deleteChildReading(articleId)
-    return reply.status(204).send()
+  router.delete('/childReadings/:id', async (req: Req<Post>, res) => {
+    const articleId = req.params.id
+    const { body, statusCode } = await deletePostChildReading(articleId)
+    return res.send(body).status(statusCode)
   })
 }

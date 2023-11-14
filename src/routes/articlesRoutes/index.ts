@@ -1,53 +1,34 @@
-import { Router, Request } from 'express'
-import {
-  createArticle,
-  deleteArticle,
-  listArticles,
-  updateArticle
-} from '../../database/articleQueries'
-import { Req } from './interfaces'
-import { getArticles } from '../../controllers/getArticles'
+import { Router } from 'express'
+import { Post } from '../../models/post'
+import { Req } from '../shared/interfaces'
+import getArticles from '../../controllers/articles/getArticles'
+import createPostArticle from '../../controllers/articles/createPostArticle'
+import updatePostArticle from '../../controllers/articles/updatePostArticle'
+import deletePostArticle from '../../controllers/articles/deletePostArticle'
 
-export default async function registerArticleRoutes(
-  router: Router
-): Promise<void> {
-  router.post('/articles', async (req: Request<Req>, reply) => {
-    const { author, title, description, content } = req.body
-
-    await createArticle({
-      author,
-      title,
-      description,
-      content
-    })
-
-    console.log('Estudo criado:', title)
-    return reply.status(201).send()
+export default async function registerArticleRoutes(router: Router) {
+  router.get('/articles', async (req: Req<Post>, res) => {
+    const search = req.params.search
+    const { body, statusCode } = await getArticles(search)
+    return res.send(body).status(statusCode)
   })
 
-  router.get('/articles', async (request: Req, reply) => {
-    const search = request.params.search
-    const articles = await getArticles(search)
-
-    console.log('Estudos buscados:', articles)
-    return reply.send(articles)
+  router.post('/articles', async (req: Req<Post>, res) => {
+    const postContent = req.body
+    const { body, statusCode } = await createPostArticle(postContent)
+    return res.send(body).status(statusCode)
   })
 
-  router.put('/articles/:id', async (request: Req, reply) => {
-    const articleId = request.params.id
-    const { author, title, description, content } = request.body
-
-    await updateArticle(articleId, { author, title, description, content })
-
-    const articles = await listArticles('')
-
-    return reply.status(204).send(articles)
-  })
-
-  router.delete('/articles/:id', async (req: Req, reply) => {
+  router.put('/articles/:id', async (req: Req<Post>, res) => {
     const articleId = req.params.id
+    const postContent = req.body
+    const { body, statusCode } = await updatePostArticle(articleId, postContent)
+    return res.send(body).status(statusCode)
+  })
 
-    await deleteArticle(articleId)
-    return reply.status(204).send()
+  router.delete('/articles/:id', async (req: Req<Post>, res) => {
+    const articleId = req.params.id
+    const { body, statusCode } = await deletePostArticle(articleId)
+    return res.send(body).status(statusCode)
   })
 }

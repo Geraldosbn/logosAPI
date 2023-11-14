@@ -1,12 +1,6 @@
 import { randomUUID } from 'crypto'
 import sql from './db'
-
-interface ChildReading {
-  author: string
-  title: string
-  description: string
-  content: string
-}
+import { Post } from '../models/post'
 
 export async function listChildReadings(search: string | undefined) {
   let postChildReading
@@ -19,19 +13,16 @@ export async function listChildReadings(search: string | undefined) {
   return postChildReading
 }
 
-export async function createChildReading(childReading: ChildReading) {
+export async function createChildReading(post: Post) {
   const childReadingId = randomUUID()
-  const { author, title, description, content } = childReading
+  const { author, title, description, content } = post
 
   await sql`INSERT INTO postChildReading (id, author, title, description, content)
             VALUES (${childReadingId}, ${author}, ${title}, ${description}, ${content})`
 }
 
-export async function updateChildReading(
-  id: string,
-  childReading: ChildReading
-) {
-  const { title, description, content } = childReading
+export async function updateChildReading(id: string, post: Post) {
+  const { title, description, content } = post
 
   await sql`UPDATE postChildReading
             SET title = ${title}, description = ${description}, content = ${content}

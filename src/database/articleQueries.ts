@@ -1,12 +1,6 @@
 import { randomUUID } from 'crypto'
 import sql from './db'
-
-interface Article {
-  author: string
-  title: string
-  description: string
-  content: string
-}
+import { Post } from '../models/post'
 
 export async function listArticles(search: string | undefined) {
   let postarticle
@@ -19,7 +13,7 @@ export async function listArticles(search: string | undefined) {
   return postarticle
 }
 
-export async function createArticle(article: Article) {
+export async function createArticle(article: Post) {
   const articleId = randomUUID()
   const { author, title, description, content } = article
 
@@ -27,7 +21,7 @@ export async function createArticle(article: Article) {
             VALUES (${articleId}, ${author}, ${title}, ${description}, ${content})`
 }
 
-export async function updateArticle(id: string, article: Article) {
+export async function updateArticle(id: string, article: Post) {
   const { title, description, content } = article
 
   await sql`UPDATE postArticle
