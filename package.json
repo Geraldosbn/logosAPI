@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch 'src/' --exec ts-node src/index.ts -e ts",
-    "build": "yarn && yarn clear && tsc",
+    "build": " yarn clear && yarn && tsc",
     "clear": "rm -r dist"
   },
   "devDependencies": {
