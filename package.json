@@ -6,7 +6,7 @@
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch 'src/' --exec ts-node src/index.ts -e ts",
     "build": " yarn clear && yarn && tsc",
-    "clear": "rm -r dist"
+    "clear": "rimraf ./dist"
   },
   "devDependencies": {
     "@types/cors": "^2.8.16",
