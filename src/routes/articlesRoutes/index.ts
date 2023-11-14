@@ -6,6 +6,7 @@ import {
   updateArticle
 } from '../../database/articleQueries'
 import { Req } from './interfaces'
+import { getArticles } from '../../controllers/getArticles'
 
 export default async function registerArticleRoutes(
   router: Router
@@ -26,7 +27,7 @@ export default async function registerArticleRoutes(
 
   router.get('/articles', async (request: Req, reply) => {
     const search = request.params.search
-    const articles = await listArticles(search)
+    const articles = await getArticles(search)
 
     console.log('Estudos buscados:', articles)
     return reply.send(articles)

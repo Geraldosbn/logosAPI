@@ -1,16 +1,11 @@
+import { Post } from '../../models/post'
+
 export interface Req {
-  body: Body
+  body: Post
   params: Params
 }
 
 interface Params {
   search?: string
   id: string
-}
-
-interface Body {
-  author: string
-  title: string
-  description: string
-  content: string
 }
