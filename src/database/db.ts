@@ -1,11 +1,11 @@
 import 'dotenv/config'
 import postgres from 'postgres'
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env
+const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, ENDPOINT_ID } = process.env
 
-const sql = postgres({
+const sql = postgres('', {
   host: PGHOST,
-  dbname: PGDATABASE,
+  database: PGDATABASE,
   user: PGUSER,
   password: PGPASSWORD,
   port: 5432,
