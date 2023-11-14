@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch 'src/' --exec ts-node src/index.ts -e ts",
-    "build": "yarn && tsc"
+    "build": "yarn && yarn clear && tsc",
+    "clear": "rm -r dist"
   },
   "devDependencies": {
     "@types/cors": "^2.8.16",
