@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { Post } from '../../models/post'
-import { Req } from '../shared/interfaces'
+import { Req } from '../../shared/interfaces'
 import getArticles from '../../controllers/articles/getArticles'
 import createPostArticle from '../../controllers/articles/createPostArticle'
 import updatePostArticle from '../../controllers/articles/updatePostArticle'
