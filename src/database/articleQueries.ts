@@ -5,8 +5,7 @@ import { Post } from '../models/post'
 export async function listArticles(search: string | undefined) {
   let postarticle
   if (search) {
-    postarticle = await sql`SELECT * FROM postArticle
-      WHERE (title ILIKE '%' || ${search} || '%') OR (COALESCE(${search}, '') = '')`
+    postarticle = await sql`SELECT * FROM postArticle WHERE id = ${search};`
   } else {
     postarticle = await sql`SELECT * FROM postarticle`
   }
@@ -19,6 +18,10 @@ export async function createArticle(article: Post) {
 
   await sql`INSERT INTO postArticle (id, author, title, description, content)
             VALUES (${articleId}, ${author}, ${title}, ${description}, ${content})`
+
+  const articleCreated = await listArticles(articleId)
+
+  return articleCreated
 }
 
 export async function updateArticle(id: string, article: Post) {
