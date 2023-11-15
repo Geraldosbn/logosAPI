@@ -8,19 +8,19 @@ import deletePostChildReading from '../../controllers/childReading/deletePostChi
 
 export const router = Router()
 
-router.get('/posts', async (req: Req<Post>, res) => {
+router.get('/', async (req: Req<Post>, res) => {
   const search = req.params.search
   const { body, statusCode } = await getChildReading(search)
   return res.status(statusCode).send(body)
 })
 
-router.post('/posts', async (req: Req<Post>, res) => {
+router.post('/', async (req: Req<Post>, res) => {
   const postContent = req.body
   const { body, statusCode } = await createPostChildReading(postContent)
   return res.status(statusCode).send(body)
 })
 
-router.put('/posts/:id', async (req: Req<Post>, res) => {
+router.put('/:id', async (req: Req<Post>, res) => {
   const articleId = req.params.id
   const postContent = req.body
   const { body, statusCode } = await updatePostChildReading(
@@ -30,7 +30,7 @@ router.put('/posts/:id', async (req: Req<Post>, res) => {
   return res.status(statusCode).send(body)
 })
 
-router.delete('/posts/:id', async (req: Req<Post>, res) => {
+router.delete('/:id', async (req: Req<Post>, res) => {
   const articleId = req.params.id
   const { body, statusCode } = await deletePostChildReading(articleId)
   return res.status(statusCode).send(body)
